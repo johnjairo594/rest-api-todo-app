@@ -48,3 +48,15 @@ export function sendRequest(method, params, url, message){
         show_alert('Error with the request', 'error');
     })
 }
+
+export function editTodo(url, params) {
+    axios({method:'PUT', url:url, data:params})
+        .then(response => {
+            let status = response['status'];
+            if (status === 200) {
+                show_alert('good', 'success');
+            }
+        }).catch(error => {
+        show_alert('Error with the request', 'error');
+    })
+}

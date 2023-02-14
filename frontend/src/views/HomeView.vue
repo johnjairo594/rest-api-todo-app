@@ -12,14 +12,17 @@
                     <tbody class="table-group-divider" id="content">
                         <tr v-for="todo, i in todos" :key="todo.id">
                             <td>{{i+1}}</td>
-                            <td>{{todo.tittle}}</td>
+                            <td>{{todo.title}}</td>
                             <td>{{todo.completed}}</td>
-                            <td>
-                                <router-link :to="{path:'/edit'+todo.id}" class="btn btn-warning">
+                            <td class="text-center">
+                                <router-link :to="{path:'/edit/'+todo.id}" class="btn btn-warning mx-1">
                                     <i class="fa-solid fa-edit"></i>
                                 </router-link>
                                 <button class="btn btn-danger" v-on:click="this.delete(todo.id, todo.tittle)">
                                     <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <button class="btn btn-success mx-1" v-on:click="checkTodo(todo.id)">
+                                    <i class="fa-solid fa-check"></i>
                                 </button>
                             </td>
                         </tr>
@@ -31,10 +34,10 @@
 </template>
 <script>
     import axios from "axios";
-    import {confirm} from "@/utils";
+    import {confirm, sendRequest, show_alert, editTodo} from "@/utils";
     export default{
         data(){
-            return{ todos:null }
+            return{ todos:null, todo:null, title:'', completed:''}
         },
         mounted(){
             this.getTodos();
@@ -49,7 +52,16 @@
             },
             delete(id, name){
                 confirm(id, name);
-            }
+            },
+            checkTodo(id){
+                axios.get('http://localhost:7070/api/todos/'+id).then(
+                    response => (
+                        this.todo = response.data
+
+                    )
+                );
+
+            },
         }
     }
 </script>
