@@ -25,7 +25,7 @@ import { show_alert, sendRequest} from "@/utils";
 export default {
     data(){
         return{
-            title:'', completed:'false', url:'http://localhost:7070/api/todos/'
+            title:'', completed:false, url:'http://localhost:7070/api/todos/'
         }
     },
     methods:{

@@ -13,7 +13,12 @@
                         <tr v-for="todo, i in todos" :key="todo.id">
                             <td>{{i+1}}</td>
                             <td>{{todo.title}}</td>
-                            <td>{{todo.completed}}</td>
+                            <td v-if="todo.completed">
+                                <i class="fa-solid fa-check"></i>
+                            </td>
+                            <td v-else>
+                                <i class="fa-solid fa-x"></i>
+                            </td>
                             <td class="text-center">
                                 <router-link :to="{path:'/edit/'+todo.id}" class="btn btn-warning mx-1">
                                     <i class="fa-solid fa-edit"></i>
@@ -34,13 +39,14 @@
 </template>
 <script>
     import axios from "axios";
-    import {confirm, sendRequest, show_alert, editTodo} from "@/utils";
+    import {confirm, editTodo} from "@/utils";
+
     export default{
         data(){
-            return{ todos:null, todo:null, title:'', completed:''}
+            return{ todos:null, todo:null, title:'', completed:null}
         },
         mounted(){
-            this.getTodos();
+            this.getTodos()
         },
         methods:{
             getTodos(){
@@ -54,12 +60,18 @@
                 confirm(id, name);
             },
             checkTodo(id){
-                axios.get('http://localhost:7070/api/todos/'+id).then(
+                let url = 'http://localhost:7070/api/todos/'+id
+                let params = {}
+                    axios.get(url).then(
                     response => (
-                        this.todo = response.data
-
+                        this.todo = response.data,
+                            this.completed = response.data['completed']
                     )
-                );
+                ).then(() => {
+                    this.completed = this.completed === false;
+                    params = {title:this.todo['title'], completed:this.completed}
+                    editTodo(url, params);
+                    })
 
             },
         }

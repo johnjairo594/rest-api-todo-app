@@ -54,9 +54,13 @@ export function editTodo(url, params) {
         .then(response => {
             let status = response['status'];
             if (status === 200) {
-                show_alert('good', 'success');
+                show_alert('Todo status changed', 'info');
+                window.setTimeout(function(){
+                    window.location.href='/';
+                },1000);
             }
         }).catch(error => {
         show_alert('Error with the request', 'error');
     })
 }
+

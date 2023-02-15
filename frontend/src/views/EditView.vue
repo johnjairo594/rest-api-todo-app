@@ -28,7 +28,7 @@ import axios from "axios";
 export default {
     data(){
         return{
-            id:0,title:'', completed:'false', url:'http://localhost:7070/api/todos/'
+            id:0,title:'', completed:false, url:'http://localhost:7070/api/todos/'
         }
     },
     mounted() {
