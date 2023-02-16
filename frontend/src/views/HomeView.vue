@@ -23,7 +23,7 @@
                                 <router-link :to="{path:'/edit/'+todo.id}" class="btn btn-warning mx-1">
                                     <i class="fa-solid fa-edit"></i>
                                 </router-link>
-                                <button class="btn btn-danger" v-on:click="this.delete(todo.id, todo.tittle)">
+                                <button class="btn btn-danger" v-on:click="this.delete(todo.id, todo.title)">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                                 <button class="btn btn-success mx-1" v-on:click="checkTodo(todo.id)">
